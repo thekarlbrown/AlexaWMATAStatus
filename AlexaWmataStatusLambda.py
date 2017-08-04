@@ -43,10 +43,22 @@ def form_and_return_api_call(startStation):
     api_results_json = requests.get(station_prediction_url + station_code_for_api, wmata_get_parameters).json()
     return api_results_json['Trains']
 
+def correct_train_color_casing(trainColor):
+    for color in train_color_conversions.keys():
+        if (trainColor.lower() == color.lower()):
+            trainColor = color
+    return trainColor
+
+def correct_train_station_casing(trainStation):
+    for station in train_station_to_api_code.keys():
+        if (trainStation.lower() == station.lower()):
+            trainStation = station
+    return trainStation
+
 def lambda_handler(event, context):
 
     if (event["session"]["application"]["applicationId"] !=
-            "amzn1.ask.skill.e36d5c7c-db76-4d38-b7e3-fbc30b94c498"):
+            "amzn1.ask.skill.5a429a8a-ebf0-40c4-85fd-20dcae54c105"):
         raise ValueError("Invalid Application ID")
 
     if event["session"]["new"]:
@@ -112,9 +124,9 @@ def get_train_status(intent):
             should_end_session = False
 
             if "TrainColor" in intent["slots"] and "StartingStation" in intent["slots"] and "EndingStation" in intent["slots"]:
-                start_station = intent["slots"]["StartingStation"]["value"]
-                end_station = intent["slots"]["EndingStation"]["value"]
-                train_color = intent["slots"]["TrainColor"]["value"]
+                start_station = correct_train_station_casing(intent["slots"]["StartingStation"]["value"])
+                end_station = correct_train_station_casing(intent["slots"]["EndingStation"]["value"])
+                train_color = correct_train_color_casing(intent["slots"]["TrainColor"]["value"])
 
                 speech_output = return_full_alexa_wmata_response(start_station, end_station, train_color)
                 reprompt_text = ""
