@@ -23,8 +23,17 @@ def listStations():
     for station in stationList:
         print (station)
 
+def listStationsToCodes():
+    completeListToPrint = ''
+    for stations in station_list_json['Stations']:
+        completeListToPrint += f"'{stations['Name']}': '{stations['Code']}', "
+    print (completeListToPrint)
+
 print ('--- List of Lines ---')
 listRailCodes()
 
 print ('--- List of Stations ---')
 listStations()
+
+print ('--- List of Stations to API Station Codes --')
+listStationsToCodes()

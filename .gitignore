@@ -1,6 +1,18 @@
 # API Key
 api_key
 
+# Pip Generated Dependencies for AWS
+certifi-2017.7.27.1.dist-info/
+certifi/
+chardet-3.0.4.dist-info/
+chardet/
+idna-2.5.dist-info/
+idna/
+requests-2.18.3.dist-info/
+requests/
+urllib3-1.22.dist-info/
+urllib3/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
